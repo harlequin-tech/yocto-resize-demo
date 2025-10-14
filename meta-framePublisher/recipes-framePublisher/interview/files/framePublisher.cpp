@@ -14,8 +14,7 @@ int main(int argc, char *argv[])
         std::cerr << "Too many arguments.  Usage frameResizer <file.mp4>" << std::endl;
     }
 
-    //Publisher publisher("ipc://tmp/framePublisher", "ipc://tmp/framePublisherSync");
-    Publisher publisher("tcp://*:5555", "tcp://*:5556");
+    Publisher publisher(publisherAddress, publisherSyncAddress);
     Video video;
     std::string videoPath = argv[1];
 
@@ -31,16 +30,19 @@ int main(int argc, char *argv[])
 
     // while the video file is open, read a frame and publish it.
     std::cout << "    processing frames " << std::endl;
+    uint32_t frameCount = 0;
     while (video.isOpen()) {
         cv::Mat frame;
         if (video.readFrame(frame) < 0) {
             std::cerr << "Error: Failed to read video frame." << video.frameNumber() << std::endl;
             break;
         }
-        if (publisher.publishFrame(frame, video.frameWidth(), video.frameHeight(), video.frameFPS()) < 0) {
+        frameCount++;
+        if (publisher.sendFrame(frame, video.frameWidth(), video.frameHeight(), video.frameFPS()) < 0) {
             std::cerr << "Error: Failed to publish video frame." << video.frameNumber() << std::endl;
             break;
         }
+        printf("    Frame %8d         \r", frameCount);
     }
 
     // send end of stream to subscriber(s)

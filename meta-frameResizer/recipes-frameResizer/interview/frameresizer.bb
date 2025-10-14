@@ -1,6 +1,6 @@
 SUMMARY = "A mp4 frame publisher"
 DESCRIPTION = "This recipe builds a C++ that pulls frames from an mp4 file and publishes them via zeroMQ"
-LICENSE = "CLOSED"
+LICENSE = "MIT"
 SECTION = "resideo"
 
 SRC_URI = "file://frameResizer.cpp \
