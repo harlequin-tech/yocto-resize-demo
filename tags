@@ -1,0 +1,133 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.9~svn20110310	//
+FRAME_H_	meta-frame/recipes-frame/interview/files/include/frame.h	2;"	d
+FRAME_H_	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	2;"	d
+FRAME_MAX_SIZE	meta-frame/recipes-frame/interview/files/include/frame.h	7;"	d
+FRAME_MAX_SIZE	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	7;"	d
+Publisher	meta-frame/recipes-frame/interview/files/frame.cpp	/^Publisher::Publisher(std::string publisherAddress, std::string publisherSyncAddress)$/;"	f	class:Publisher
+Publisher	meta-frame/recipes-frame/interview/files/include/frame.h	/^class Publisher {$/;"	c
+Publisher	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.cpp	/^Publisher::Publisher(std::string publisherAddress, std::string publisherSyncAddress)$/;"	f	class:Publisher
+Publisher	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^class Publisher {$/;"	c
+SYNC_MAX_SIZE	meta-frame/recipes-frame/interview/files/include/frame.h	8;"	d
+SYNC_MAX_SIZE	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	8;"	d
+Subscriber	meta-frame/recipes-frame/interview/files/frame.cpp	/^Subscriber::Subscriber(std::string publisherAddress, std::string publisherSyncAddress)$/;"	f	class:Subscriber
+Subscriber	meta-frame/recipes-frame/interview/files/include/frame.h	/^class Subscriber {$/;"	c
+Subscriber	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.cpp	/^Subscriber::Subscriber(std::string publisherAddress, std::string publisherSyncAddress)$/;"	f	class:Subscriber
+Subscriber	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^class Subscriber {$/;"	c
+Video	meta-frame/recipes-frame/interview/files/include/frame.h	/^class Video {$/;"	c
+Video	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^class Video {$/;"	c
+_cap	meta-frame/recipes-frame/interview/files/include/frame.h	/^    cv::VideoCapture _cap;               \/\/ OpenCV video capture instance$/;"	m	class:Video
+_cap	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    cv::VideoCapture _cap;               \/\/ OpenCV video capture instance$/;"	m	class:Video
+_context	meta-frame/recipes-frame/interview/files/include/frame.h	/^    void *_context = nullptr;               \/\/ 0MQ context$/;"	m	class:Subscriber
+_context	meta-frame/recipes-frame/interview/files/include/frame.h	/^    void *_context = nullptr;           \/\/ 0MQ context$/;"	m	class:Publisher
+_context	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    void *_context = nullptr;               \/\/ 0MQ context$/;"	m	class:Subscriber
+_context	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    void *_context = nullptr;           \/\/ 0MQ context$/;"	m	class:Publisher
+_fileIsOpen	meta-frame/recipes-frame/interview/files/include/frame.h	/^    bool _fileIsOpen = false;            \/\/ true when file is open$/;"	m	class:Video
+_fileIsOpen	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    bool _fileIsOpen = false;            \/\/ true when file is open$/;"	m	class:Video
+_frameFPS	meta-frame/recipes-frame/interview/files/include/frame.h	/^    double _frameFPS = 0;$/;"	m	class:Video
+_frameFPS	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint32_t _frameFPS;                   \/\/ frames per second in source mp4 file$/;"	m	class:Subscriber
+_frameFPSSet	meta-frame/recipes-frame/interview/files/include/frame.h	/^    bool _frameFPSSet = false;$/;"	m	class:Subscriber
+_frameHeight	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint32_t _frameHeight = 0;$/;"	m	class:Video
+_frameHeight	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint32_t _frameHeight;$/;"	m	class:Subscriber
+_frameHeightSet	meta-frame/recipes-frame/interview/files/include/frame.h	/^    bool _frameHeightSet = false;$/;"	m	class:Subscriber
+_frameIndex	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint32_t _frameIndex;                \/\/ current read frame$/;"	m	class:Video
+_frameIndex	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    uint32_t _frameIndex;                \/\/ current read frame$/;"	m	class:Video
+_frameWidth	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint32_t _frameWidth = 0;$/;"	m	class:Video
+_frameWidth	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint32_t _frameWidth;$/;"	m	class:Subscriber
+_frameWidthSet	meta-frame/recipes-frame/interview/files/include/frame.h	/^    bool _frameWidthSet = false;$/;"	m	class:Subscriber
+_publishCount	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint32_t _publishCount = 0;           \/\/ Number of frames published$/;"	m	class:Subscriber
+_publishCount	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint32_t _publishCount = 0;         \/\/ Number of frames published$/;"	m	class:Publisher
+_publishCount	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    uint32_t _publishCount = 0;           \/\/ Number of frames published$/;"	m	class:Subscriber
+_publishCount	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    uint32_t _publishCount = 0;         \/\/ Number of frames published$/;"	m	class:Publisher
+_publisher	meta-frame/recipes-frame/interview/files/include/frame.h	/^    void *_publisher = nullptr;          \/\/ 0MQ publisher socket$/;"	m	class:Publisher
+_publisher	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    void *_publisher = nullptr;          \/\/ 0MQ publisher socket$/;"	m	class:Publisher
+_publisherAddress	meta-frame/recipes-frame/interview/files/include/frame.h	/^    std::string _publisherAddress;$/;"	m	class:Publisher
+_publisherAddress	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    std::string _publisherAddress;$/;"	m	class:Publisher
+_publisherSyncAddress	meta-frame/recipes-frame/interview/files/include/frame.h	/^    std::string _publisherSyncAddress;$/;"	m	class:Publisher
+_publisherSyncAddress	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    std::string _publisherSyncAddress;$/;"	m	class:Publisher
+_sndhwm	meta-frame/recipes-frame/interview/files/include/frame.h	/^    int _sndhwm = 1100000;$/;"	m	class:Publisher
+_sndhwm	meta-frame/recipes-frame/interview/files/include/frame.h	/^    int _sndhwm = 1100000;$/;"	m	class:Subscriber
+_sndhwm	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    int _sndhwm = 1100000;$/;"	m	class:Publisher
+_sndhwm	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    int _sndhwm = 1100000;$/;"	m	class:Subscriber
+_streamEnded	meta-frame/recipes-frame/interview/files/include/frame.h	/^    bool _streamEnded = true;$/;"	m	class:Subscriber
+_subscribed	meta-frame/recipes-frame/interview/files/include/frame.h	/^    bool _subscribed = false;             \/\/ true if there is a subscriber$/;"	m	class:Subscriber
+_subscribed	meta-frame/recipes-frame/interview/files/include/frame.h	/^    bool _subscribed = false;           \/\/ true if there is a subscriber$/;"	m	class:Publisher
+_subscribed	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    bool _subscribed = false;             \/\/ true if there is a subscriber$/;"	m	class:Subscriber
+_subscribed	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    bool _subscribed = false;           \/\/ true if there is a subscriber$/;"	m	class:Publisher
+_subscriber	meta-frame/recipes-frame/interview/files/include/frame.h	/^    void *_subscriber = nullptr;            \/\/ 0MQ subscriber socket (Up stream)$/;"	m	class:Subscriber
+_subscriber	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    void *_subscriber = nullptr;            \/\/ 0MQ subscriber socket (Up stream)$/;"	m	class:Subscriber
+_syncService	meta-frame/recipes-frame/interview/files/include/frame.h	/^    void *_syncService = nullptr;           \/\/ 0MQ transmit socket for subscriber sync$/;"	m	class:Subscriber
+_syncService	meta-frame/recipes-frame/interview/files/include/frame.h	/^    void *_syncService = nullptr;       \/\/ 0MQ receive socket for subscriber sync$/;"	m	class:Publisher
+_syncService	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    void *_syncService = nullptr;           \/\/ 0MQ transmit socket for subscriber sync$/;"	m	class:Subscriber
+_syncService	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    void *_syncService = nullptr;       \/\/ 0MQ receive socket for subscriber sync$/;"	m	class:Publisher
+buf	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint8_t buf[FRAME_MAX_SIZE];        \/\/ raw bytes of header + frame$/;"	m	union:__anon1
+buf	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    uint8_t buf[FRAME_MAX_SIZE];        \/\/ raw bytes of header + frame$/;"	m	union:__anon4
+close	meta-frame/recipes-frame/interview/files/frame.cpp	/^int Video::close()$/;"	f	class:Video
+close	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.cpp	/^int Video::close()$/;"	f	class:Video
+connectToPublisher	meta-frame/recipes-frame/interview/files/frame.cpp	/^int Subscriber::connectToPublisher()$/;"	f	class:Subscriber
+connectToPublisher	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.cpp	/^int Subscriber::connectToPublisher()$/;"	f	class:Subscriber
+end	meta-frame/recipes-frame/interview/files/frame.cpp	/^int Publisher::end()$/;"	f	class:Publisher
+end	meta-frame/recipes-frame/interview/files/frame.cpp	/^int Subscriber::end()$/;"	f	class:Subscriber
+end	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.cpp	/^int Publisher::end()$/;"	f	class:Publisher
+end	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.cpp	/^int Subscriber::end()$/;"	f	class:Subscriber
+endOfStream	meta-frame/recipes-frame/interview/files/include/frame.h	/^            bool endOfStream;$/;"	m	struct:__anon1::__anon2::__anon3
+endOfStream	meta-frame/recipes-frame/interview/files/include/frame.h	/^    bool endOfStream() { return _streamEnded; };$/;"	f	class:Subscriber
+endOfStream	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^            bool endOfStream;$/;"	m	struct:__anon4::__anon5::__anon6
+frame	meta-frame/recipes-frame/interview/files/include/frame.h	/^        uint8_t frame[];                \/\/ actual raw bytes of frame$/;"	m	struct:__anon1::__anon2
+frame	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^        uint8_t frame[];                \/\/ actual raw bytes of frame$/;"	m	struct:__anon4::__anon5
+frameCount	meta-frame/recipes-frame/interview/files/include/frame.h	/^            uint32_t frameCount;$/;"	m	struct:__anon1::__anon2::__anon3
+frameCount	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^            uint32_t frameCount;$/;"	m	struct:__anon4::__anon5::__anon6
+frameFPS	meta-frame/recipes-frame/interview/files/include/frame.h	/^            double frameFPS;$/;"	m	struct:__anon1::__anon2::__anon3
+frameFPS	meta-frame/recipes-frame/interview/files/include/frame.h	/^    double frameFPS() { return _frameFPS; }$/;"	f	class:Video
+frameFPS	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint32_t frameFPS() { return _frameFPS; }$/;"	f	class:Subscriber
+frameHeight	meta-frame/recipes-frame/interview/files/include/frame.h	/^            uint32_t frameHeight;$/;"	m	struct:__anon1::__anon2::__anon3
+frameHeight	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint32_t frameHeight() { return _frameHeight; }$/;"	f	class:Subscriber
+frameHeight	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint32_t frameHeight() { return _frameHeight; }$/;"	f	class:Video
+frameHeight	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^            uint32_t frameHeight;$/;"	m	struct:__anon4::__anon5::__anon6
+frameLength	meta-frame/recipes-frame/interview/files/include/frame.h	/^            uint32_t frameLength;$/;"	m	struct:__anon1::__anon2::__anon3
+frameLength	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^            uint32_t frameLength;$/;"	m	struct:__anon4::__anon5::__anon6
+frameNumber	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint32_t frameNumber() { return _frameIndex; }$/;"	f	class:Video
+frameNumber	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    uint32_t frameNumber() { return _frameIndex; }$/;"	f	class:Video
+frameSizeBytes	meta-frame/recipes-frame/interview/files/include/frame.h	/^            uint32_t frameSizeBytes;$/;"	m	struct:__anon1::__anon2::__anon3
+frameSizeBytes	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^            uint32_t frameSizeBytes;$/;"	m	struct:__anon4::__anon5::__anon6
+frameWidth	meta-frame/recipes-frame/interview/files/include/frame.h	/^            uint32_t frameWidth;$/;"	m	struct:__anon1::__anon2::__anon3
+frameWidth	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint32_t frameWidth() { return _frameWidth; }$/;"	f	class:Subscriber
+frameWidth	meta-frame/recipes-frame/interview/files/include/frame.h	/^    uint32_t frameWidth() { return _frameWidth; }$/;"	f	class:Video
+frameWidth	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^            uint32_t frameWidth;$/;"	m	struct:__anon4::__anon5::__anon6
+frame_t	meta-frame/recipes-frame/interview/files/include/frame.h	/^} frame_t;$/;"	t	typeref:union:__anon1
+frame_t	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^} frame_t;$/;"	t	typeref:union:__anon4
+header	meta-frame/recipes-frame/interview/files/include/frame.h	/^        } header;$/;"	m	struct:__anon1::__anon2	typeref:struct:__anon1::__anon2::__anon3
+header	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^        } header;$/;"	m	struct:__anon4::__anon5	typeref:struct:__anon4::__anon5::__anon6
+isConnected	meta-frame/recipes-frame/interview/files/include/frame.h	/^    bool isConnected() { return _subscribed; }$/;"	f	class:Subscriber
+isConnected	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    bool isConnected() { return _subscribed; }$/;"	f	class:Subscriber
+isOpen	meta-frame/recipes-frame/interview/files/include/frame.h	/^    int isOpen() { return _fileIsOpen; }$/;"	f	class:Video
+isOpen	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    int isOpen() { return _fileIsOpen; }$/;"	f	class:Video
+isSubscribed	meta-frame/recipes-frame/interview/files/include/frame.h	/^    bool isSubscribed() { return _subscribed; }$/;"	f	class:Publisher
+isSubscribed	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    bool isSubscribed() { return _subscribed; }$/;"	f	class:Publisher
+main	meta-framePublisher/recipes-framePublisher/interview/files/framePublisher.cpp	/^int main(int argc, char *argv[])$/;"	f
+main	meta-frameResizer/recipes-frameResizer/interview/files/frameResizer.cpp	/^int main(int argc, char *argv[])$/;"	f
+main	meta-frameSaver/recipes-frameSaver/interview/files/frameSaver.cpp	/^int main(int argc, char *argv[])$/;"	f
+msg	meta-frame/recipes-frame/interview/files/include/frame.h	/^    } msg;$/;"	m	union:__anon1	typeref:struct:__anon1::__anon2
+msg	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.h	/^    } msg;$/;"	m	union:__anon4	typeref:struct:__anon4::__anon5
+open	meta-frame/recipes-frame/interview/files/frame.cpp	/^int Video::open(std::string videoPath) $/;"	f	class:Video
+open	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.cpp	/^int Video::open(std::string videoPath) $/;"	f	class:Video
+publishFrame	meta-frame/recipes-frame/interview/files/frame.cpp	/^int Publisher::publishFrame(cv::Mat &frame, uint32_t frameWidth, uint32_t frameHeight, double frameFPS)$/;"	f	class:Publisher
+publishFrame	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.cpp	/^int Publisher::publishFrame(cv::Mat &frame)$/;"	f	class:Publisher
+readFrame	meta-frame/recipes-frame/interview/files/frame.cpp	/^int Video::readFrame(cv::Mat &frame)$/;"	f	class:Video
+readFrame	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.cpp	/^int Video::readFrame(cv::Mat &frame)$/;"	f	class:Video
+receiveFrame	meta-frame/recipes-frame/interview/files/frame.cpp	/^int Subscriber::receiveFrame(cv::Mat &frame)$/;"	f	class:Subscriber
+receiveFrame	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.cpp	/^int Subscriber::receiveFrame(cv::Mat &frame)$/;"	f	class:Subscriber
+setFrameFPS	meta-frame/recipes-frame/interview/files/include/frame.h	/^    void setFrameFPS(double fps) { _frameFPS = fps; _frameFPSSet = true; }$/;"	f	class:Subscriber
+setFrameHeight	meta-frame/recipes-frame/interview/files/include/frame.h	/^    void setFrameHeight(uint32_t height) { _frameHeight = height; _frameHeightSet = true; }$/;"	f	class:Subscriber
+setFrameWidth	meta-frame/recipes-frame/interview/files/include/frame.h	/^    void setFrameWidth(uint32_t width) { _frameWidth = width; _frameWidthSet = true; }$/;"	f	class:Subscriber
+waitForSubscriber	meta-frame/recipes-frame/interview/files/frame.cpp	/^int Publisher::waitForSubscriber()$/;"	f	class:Publisher
+waitForSubscriber	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.cpp	/^int Publisher::waitForSubscriber()$/;"	f	class:Publisher
+waitForSubscriberDisconnect	meta-frame/recipes-frame/interview/files/frame.cpp	/^int Publisher::waitForSubscriberDisconnect()$/;"	f	class:Publisher
+~Publisher	meta-frame/recipes-frame/interview/files/frame.cpp	/^Publisher::~Publisher()$/;"	f	class:Publisher
+~Publisher	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.cpp	/^Publisher::~Publisher()$/;"	f	class:Publisher
+~Subscriber	meta-frame/recipes-frame/interview/files/frame.cpp	/^Subscriber::~Subscriber()$/;"	f	class:Subscriber
+~Subscriber	meta-framePublisher/recipes-framePublisher/interview/files/old/frame.cpp	/^Subscriber::~Subscriber()$/;"	f	class:Subscriber

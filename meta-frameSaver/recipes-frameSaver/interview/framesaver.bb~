@@ -1,0 +1,17 @@
+SUMMARY = "A mp4 frame publisher"
+DESCRIPTION = "This recipe builds a C++ that receives frames from a resizer and writes them to an mp4"
+LICENSE = "CLOSED"
+SECTION = "resideo"
+
+SRC_URI = "file://frameSaver.cpp \
+           file://CMakeLists.txt"
+
+S = "${WORKDIR}/sources"
+UNPACKDIR = "${S}"
+
+DEPENDS += " opencv zeromq"
+DEPENDS += " frame"
+
+RDEPENDS_${PN} = "libopencv-core libopencv-imgproc libopencv-highgui libopencv-videoio libopencv-imgcodecs"
+
+inherit cmake
