@@ -3,6 +3,8 @@
 
 #include "frame.h"
 
+static uint8_t buf[FRAME_MAX_SIZE];        // buffer for received response
+static frame_t wireFrame;
 /**
  * Initialize 0MQ context and set up publisher and sync service sockets.
  */
@@ -80,7 +82,6 @@ int Publisher::waitForSubscriberDisconnect()
  */
 int Publisher::publishFrame(cv::Mat &frame, uint32_t frameWidth, uint32_t frameHeight, double frameFPS)
 {
-    frame_t wireFrame;
 
     wireFrame.msg.header.frameSizeBytes = frame.total() * frame.elemSize();
 
@@ -106,8 +107,6 @@ int Publisher::publishFrame(cv::Mat &frame, uint32_t frameWidth, uint32_t frameH
 
 int Publisher::end()
 {
-    frame_t wireFrame;
-
     memset(wireFrame.buf, 0, sizeof(wireFrame.buf));
     wireFrame.msg.header.endOfStream = true;
 
@@ -156,8 +155,6 @@ Subscriber::Subscriber(std::string publisherAddress, std::string publisherSyncAd
  */
 int Subscriber::connectToPublisher()
 {
-    uint8_t buf[FRAME_MAX_SIZE];        // buffer for received response
-
     std::string startMessage = "START";
 
     //  - send a synchronization request
@@ -178,8 +175,6 @@ int Subscriber::connectToPublisher()
 
 int Subscriber::receiveFrame(cv::Mat &frame)
 {
-    frame_t wireFrame;
-
     int len = zmq_recv(_syncService, wireFrame.buf, sizeof(wireFrame.buf), 0);
     if (len < 0) {
         return -1;
@@ -205,8 +200,6 @@ int Subscriber::receiveFrame(cv::Mat &frame)
 
 int Subscriber::end()
 {
-    uint8_t buf[FRAME_MAX_SIZE];        // buffer for received response
-    
     // disconnect from the upstream publisher
     std::string endMessage = "END";
     if (zmq_send(_syncService, endMessage.c_str(), endMessage.length() + 1, 0) < 0) {
