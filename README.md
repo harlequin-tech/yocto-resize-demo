@@ -1,0 +1,4 @@
+- framePublisher <file.mp4>: breaks an mp4 file into frames and publishes them via its publish socket.
+- frameResizer <width> <height> : subscribes to the framePublisher and resizes each frame it recieves.  It then publishes the resized frame.
+- frameSaver <outfile.mp4> : subscribes to the frameResizer and then writes frames to the output mp4 file.
+- frameMonitor: tbd
