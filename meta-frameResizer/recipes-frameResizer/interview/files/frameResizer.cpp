@@ -19,8 +19,8 @@ int main(int argc, char *argv[])
     std::string width = argv[1];
     std::string height = argv[2];
 
-    Subscriber subscriber("tcp://127.0.0.1:5555", "tcp://127.0.0.1:5556");
-    Publisher publisher("tcp://*:5557", "tcp://*:5558");
+    Subscriber subscriber(publisherAddress, publisherSyncAddress);
+    Publisher publisher(resizerAddress, resizerSyncAddress);
 
     std::cout << "    waiting for a subscriber" << std::endl;
     publisher.waitForSubscriber();
@@ -32,28 +32,34 @@ int main(int argc, char *argv[])
     subscriber.setFrameWidth(std::stoi(width));
     subscriber.setFrameHeight(std::stoi(height));
 
-    // resize every receive frame until end of stream
-    while (!subscriber.endOfStream()) {
-        cv::Mat frame;
-        if (subscriber.receiveFrame(frame) < 0) {
-            break;
+    while (1) {
+        // resize every receive frame until end of stream
+        uint32_t frameCount = 0;
+        while (!subscriber.endOfStream()) {
+            cv::Mat frame;
+            if ((subscriber.receiveFrame(frame) < 0) || subscriber.endOfStream()) {
+                break;
+            }
+            frameCount++;
+            printf("    Frame %8d         \r", frameCount);
+
+            // Resize the frame using bilinear interpolation
+            cv::Mat resizedFrame;
+            cv::resize(frame, resizedFrame, newFrameSize, 0, 0, cv::INTER_LINEAR);
+            if (publisher.sendFrame(resizedFrame,
+                                    subscriber.frameWidth(),
+                                    subscriber.frameHeight(),
+                                    subscriber.frameFPS()) < 0) {
+                std::cerr << "Error: Failed to publish resized frame." << std::endl;
+                break;
+            }
         }
 
-        // Resize the frame using bilinear interpolation
-        cv::Mat resizedFrame;
-        cv::resize(frame, resizedFrame, newFrameSize, 0, 0, cv::INTER_LINEAR);
-        if (publisher.publishFrame(resizedFrame,
-                                   subscriber.frameWidth(),
-                                   subscriber.frameHeight(),
-                                   subscriber.frameFPS()) < 0) {
-            std::cerr << "Error: Failed to publish resized frame." << std::endl;
-            break;
-        }
+        std::cout << "    stream ended after " << frameCount << " frames" << std::endl;
+        // send end of stream to subscriber(s)
+        publisher.end();
+        publisher.waitForSubscriberDisconnect();
     }
-
-    // send end of stream to subscriber(s)
-    publisher.end();
-    publisher.waitForSubscriberDisconnect();
 
     return 0;
 }

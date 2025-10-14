@@ -1,4 +1,3 @@
-#include <string>
 #include <iostream>
 
 #include "frame.h"
@@ -14,7 +13,7 @@ Publisher::Publisher(std::string publisherAddress, std::string publisherSyncAddr
     _context = zmq_ctx_new();
 
     //  Socket to talk to clients
-    _publisher = zmq_socket(_context, ZMQ_REP);
+    _publisher = zmq_socket(_context, ZMQ_PUSH);
     zmq_setsockopt(_publisher, ZMQ_SNDHWM, &_sndhwm, sizeof (int));
     if (zmq_bind(_publisher, publisherAddress.c_str()) << 0) {
         std::cerr << "   Error: failed to bind to " << publisherSyncAddress << " errno " << errno << std::endl;
@@ -28,6 +27,10 @@ Publisher::Publisher(std::string publisherAddress, std::string publisherSyncAddr
     }
 }
 
+/**
+ * Wait for the subscriber to send start on the sync socket.
+ * @return 0 - success, -1 failure
+ */
 int Publisher::waitForSubscriber()
 {
     std::cout << "    waitForSubscriber()" << std::endl;
@@ -43,8 +46,10 @@ int Publisher::waitForSubscriber()
 
     //  - send synchronization reply
     std::string payload = "READY";
+    strncpy((char *)buf, payload.c_str(), sizeof(buf));
+    buf[sizeof(buf)-1] = '\0';
     std::cout << "    Sending response message to subscriber via sync socket" << std::endl;
-    int res = zmq_send(_syncService, payload.c_str(), payload.length()+1, 0);
+    int res = zmq_send(_syncService, buf, sizeof(buf), 0);
     if (res < 0) {
         std::cerr << "Error: zmq_send failed with errno " << errno << std::endl;
         return -1;
@@ -64,11 +69,15 @@ int Publisher::waitForSubscriberDisconnect()
         std::cerr << "Error: zmq_recv failed with errno " << errno << std::endl;
         return -1;
     }
+    std::cout << "    Received \"" << (char *)buf << "\" from subscriber" << std::endl;
     std::cout << "    Sending response message to subscriber via sync socket" << std::endl;
     std::string endMessage = "END";
 
-    //  - send a synchronization request
-    if (zmq_send(_syncService, endMessage.c_str(), endMessage.length()+1, 0) < 0) {
+    strncpy((char *)buf, endMessage.c_str(), sizeof(buf));
+    buf[sizeof(buf)-1] = '\0';
+    std::cout << "    Sending \"END\" response message to subscriber via sync socket" << std::endl;
+    int res = zmq_send(_syncService, buf, sizeof(buf), 0);
+    if (res < 0) {
         std::cerr << "Failed to send start message, errno " << errno << std::endl;
     }
     return 0;
@@ -80,9 +89,8 @@ int Publisher::waitForSubscriberDisconnect()
  * @retval 0 - success
  * @retval -1 - failure
  */
-int Publisher::publishFrame(cv::Mat &frame, uint32_t frameWidth, uint32_t frameHeight, double frameFPS)
+int Publisher::sendFrame(cv::Mat &frame, uint32_t frameWidth, uint32_t frameHeight, double frameFPS)
 {
-
     wireFrame.msg.header.frameSizeBytes = frame.total() * frame.elemSize();
 
     uint32_t wireFrameTotalSize = sizeof(wireFrame.msg.header) + wireFrame.msg.header.frameSizeBytes;
@@ -93,15 +101,27 @@ int Publisher::publishFrame(cv::Mat &frame, uint32_t frameWidth, uint32_t frameH
         return -1;
     }
 
+    wireFrame.msg.header.magic = 0xDEADBEEF;
+    wireFrame.msg.header.frameLength = wireFrameTotalSize;
     wireFrame.msg.header.frameWidth = frameWidth;
     wireFrame.msg.header.frameHeight = frameHeight;
     wireFrame.msg.header.frameFPS = frameFPS;
+    memcpy(wireFrame.msg.frame, frame.data, wireFrame.msg.header.frameSizeBytes);
 
+#if 0
+    std::string frameStr = "FRAME";
+
+    if (zmq_send(_publisher, frameStr.c_str(), frameStr.length(), ZMQ_SNDMORE) < 0) {
+        std::cerr << "Error: zmq_send FRAME failed with errno " << errno << std::endl;
+        return -1;
+    }
+#endif
     if (zmq_send(_publisher, wireFrame.buf, wireFrameTotalSize, 0) < 0) {
         std::cerr << "Error: zmq_send failed with errno " << errno << std::endl;
         return -1;
     }
     _publishCount++;
+    frame.release();
     return 0;
 }
 
@@ -134,7 +154,7 @@ Subscriber::Subscriber(std::string publisherAddress, std::string publisherSyncAd
     std::cout << "    Subscribing to publisher " << publisherAddress << std::endl;
     _context = zmq_ctx_new();
     //  Socket to receive from publisher
-    _subscriber = zmq_socket(_context, ZMQ_REQ);
+    _subscriber = zmq_socket(_context, ZMQ_PULL);
 
     uint32_t highWaterMark = sizeof(frame_t);       // max bytes supported by the socket
     zmq_setsockopt(_subscriber, ZMQ_SNDHWM, &highWaterMark, sizeof (int));
@@ -155,11 +175,13 @@ Subscriber::Subscriber(std::string publisherAddress, std::string publisherSyncAd
  */
 int Subscriber::connectToPublisher()
 {
+    uint8_t buf[SYNC_MAX_SIZE];
     std::string startMessage = "START";
-
     //  - send a synchronization request
-    std::cout << "    Sending START to publisher sync socket" << std::endl;
-    if (zmq_send(_syncService, startMessage.c_str(), startMessage.length()+1, 0) < 0) {
+    strncpy((char *)buf, startMessage.c_str(), sizeof(buf));
+    buf[sizeof(buf)-1] = '\0';
+    std::cout << "    Sending \"" << startMessage << "\"to publisher sync socket" << std::endl;
+    if (zmq_send(_syncService, buf, sizeof(buf), 0) < 0) {
         std::cerr << "Failed to send start message, errno " << errno << std::endl;
     }
 
@@ -168,32 +190,71 @@ int Subscriber::connectToPublisher()
     int len = zmq_recv(_syncService, buf, sizeof(buf), 0);
     if (len < 0) {
         std::cerr << "Failed to receive start ack, errno " << errno << std::endl;
+        // try again
+        if (zmq_send(_syncService, startMessage.c_str(), startMessage.length()+1, 0) < 0) {
+            std::cerr << "Failed to send start message, errno " << errno << std::endl;
+        }
+        std::cout << "    Waiting for response from publisher sync socket" << std::endl;
+        int len = zmq_recv(_syncService, buf, sizeof(buf), 0);
+        if (len < 0) {
+            std::cerr << "Failed to receive start ack, errno " << errno << std::endl;
+        }
         return -1;
     }
+    std::cout << "    Received \"" << (char *)buf << "\" from publisher" << std::endl;
+    _streamEnded = false;
+    //  Subscribe to the 'frame' topic
+#if 0
+    if (zmq_setsockopt(_subscriber, ZMQ_SUBSCRIBE, "FRAME", strlen ("FRAME")) < 0) {
+        std::cerr << "Failed to subscribe to frame messages, errno " << errno << std::endl;
+        return -1;
+    }
+#endif
+
     return 0;
 }
 
+/**
+ * Wait for a frame from the publisher.
+ * @param frame - return the frame heare
+ * @return 0 - success, -1 - failure
+ */
 int Subscriber::receiveFrame(cv::Mat &frame)
 {
-    int len = zmq_recv(_syncService, wireFrame.buf, sizeof(wireFrame.buf), 0);
+#if 0
+    char pubMsg[128];
+    int len = zmq_recv(_subscriber, pubMsg, sizeof(pubMsg), 0);
+    pubMsg[len+1] = 0;
+#endif
+    int len = zmq_recv(_subscriber, wireFrame.buf, sizeof(wireFrame.buf), 0);
     if (len < 0) {
+        std::cerr << "   Error: zmq_recv failed with errno =  " << errno << std::endl;
         return -1;
+    }
+    if (wireFrame.msg.header.endOfStream) {
+        std::cout << "    received end-of-stream" << std::endl;
+        _streamEnded = true;
+        return 0;
     }
 
     // record mp4 dimensions unless manually set
     if (!_frameWidthSet) {
         _frameWidth = wireFrame.msg.header.frameWidth;
+        std::cout << "    frame width " << _frameWidth << std::endl;
+        _frameWidthSet = true;
     }
 
     if (!_frameHeightSet) {
         _frameHeight = wireFrame.msg.header.frameHeight;
+        std::cout << "    frame height " << _frameHeight << std::endl;
+        _frameHeightSet = true;
     }
     if (!_frameFPSSet) {
         _frameFPS = wireFrame.msg.header.frameFPS;
+        std::cout << "    frame fps " << _frameFPS << std::endl;
+        _frameFPSSet = true;
     }
-
-    cv::Mat receivedFrame(wireFrame.msg.header.frameHeight, wireFrame.msg.header.frameWidth, CV_8UC3, wireFrame.msg.frame);
-    frame = receivedFrame.clone();
+    frame = cv::Mat(wireFrame.msg.header.frameHeight, wireFrame.msg.header.frameWidth, CV_8UC3, wireFrame.msg.frame);
 
     return 0;
 }

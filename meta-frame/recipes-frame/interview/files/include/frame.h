@@ -6,7 +6,20 @@
 
 #define FRAME_MAX_SIZE 10*1024*1024        // max size of a frame message in bytes
 #define SYNC_MAX_SIZE  1024             // max size of a synchronization message in bytes
-                                      
+
+#if 1
+static const char *publisherAddress = "ipc://publisher";
+static const char *publisherSyncAddress = "ipc://publisherSync";
+static const char *resizerAddress = "ipc://resizer";
+static const char *resizerSyncAddress = "ipc://resizerSync";
+#else
+static const char *publisherAddress = "tcp://127.0.0.1:5555";
+static const char *publisherSyncAddress = "tcp://127.0.0.1:5556";
+static const char *resizerAddress = "tcp://127.0.0.1:5557";
+static const char *resizerSyncAddress = "tcp://127.0.0.1:5558";
+#endif
+
+
 /**
  * format of a frame on the wire
  * @param msg - decoded frame message
@@ -15,6 +28,7 @@
 typedef union {
     struct [[gnu::packed]] {
         struct {
+            uint32_t magic;
             uint32_t frameLength;
             uint32_t frameCount;
             bool endOfStream;
@@ -36,7 +50,7 @@ public:
     ~Publisher();
     int waitForSubscriber();
     int waitForSubscriberDisconnect();
-    int publishFrame(cv::Mat &frame, uint32_t frameWidth, uint32_t frameHeight, double frameFPS);
+    int sendFrame(cv::Mat &frame, uint32_t frameWidth, uint32_t frameHeight, double frameFPS);
     int end();
     bool isSubscribed() { return _subscribed; }
 private:
