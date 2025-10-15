@@ -135,6 +135,7 @@ int Publisher::end()
         std::cerr << "Error: zmq_send failed with errno " << errno << std::endl;
         return -1;
     }
+    _subscribed = false;
 
     return 0;
 }

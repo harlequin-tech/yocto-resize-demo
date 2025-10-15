@@ -52,10 +52,10 @@ int main(int argc, char *argv[])
             break;
         }
     } while (!subscriber.endOfStream());
-
+    std::cout << std::endl;
     videoWriter.release();
 
-    subscriber.end();
+    std::cout << "    done" << std::endl;
 
     return 0;
 }

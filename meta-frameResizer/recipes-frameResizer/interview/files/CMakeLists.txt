@@ -15,3 +15,5 @@ add_executable(${PROJECT_NAME} frameResizer.cpp)
 target_link_libraries(${PROJECT_NAME} -lframe ${OpenCV_LIBS} ${ZeroMQ_LIBS} -lzmq)
 
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
+install(FILES ${PROJECT_NAME}.service DESTINATION /etc/systemd/system)
+#install(FILES ${PROJECT_NAME}.service DESTINATION /usr/lib/systemd)

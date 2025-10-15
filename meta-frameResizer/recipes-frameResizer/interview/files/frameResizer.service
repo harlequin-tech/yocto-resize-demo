@@ -1,0 +1,15 @@
+[Unit]
+Description=MP4 Frame stream resizer
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/root
+ExecStart=/usr/bin/frameResizer 320 128
+Restart=on-failure
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target
+

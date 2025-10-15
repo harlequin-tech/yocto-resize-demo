@@ -45,6 +45,8 @@ int main(int argc, char *argv[])
         printf("    Frame %8d         \r", frameCount);
     }
 
+    std::cout << std::endl;
+
     // send end of stream to subscriber(s)
     std::cout << "    closing publisher" << std::endl;
     publisher.end();

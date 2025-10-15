@@ -22,17 +22,17 @@ int main(int argc, char *argv[])
     Subscriber subscriber(publisherAddress, publisherSyncAddress);
     Publisher publisher(resizerAddress, resizerSyncAddress);
 
-    std::cout << "    waiting for a subscriber" << std::endl;
-    publisher.waitForSubscriber();
-
-    std::cout << "    connecting to publisher" << std::endl;
-    subscriber.connectToPublisher();
-    cv::Size newFrameSize(std::stoi(width), std::stoi(height));
-
-    subscriber.setFrameWidth(std::stoi(width));
-    subscriber.setFrameHeight(std::stoi(height));
-
     while (1) {
+        std::cout << "    waiting for a subscriber" << std::endl;
+        publisher.waitForSubscriber();
+
+        std::cout << "    connecting to publisher" << std::endl;
+        subscriber.connectToPublisher();
+        cv::Size newFrameSize(std::stoi(width), std::stoi(height));
+
+        subscriber.setFrameWidth(std::stoi(width));
+        subscriber.setFrameHeight(std::stoi(height));
+
         // resize every receive frame until end of stream
         uint32_t frameCount = 0;
         while (!subscriber.endOfStream()) {
@@ -41,7 +41,6 @@ int main(int argc, char *argv[])
                 break;
             }
             frameCount++;
-            printf("    Frame %8d         \r", frameCount);
 
             // Resize the frame using bilinear interpolation
             cv::Mat resizedFrame;
@@ -55,10 +54,11 @@ int main(int argc, char *argv[])
             }
         }
 
+        std::cout << std::endl;
         std::cout << "    stream ended after " << frameCount << " frames" << std::endl;
         // send end of stream to subscriber(s)
         publisher.end();
-        publisher.waitForSubscriberDisconnect();
+        //publisher.waitForSubscriberDisconnect();
     }
 
     return 0;
